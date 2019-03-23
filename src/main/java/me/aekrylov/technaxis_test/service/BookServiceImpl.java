@@ -22,13 +22,18 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public void create(Book book) {
-        repository.save(book);
+    public Book create(Book book) {
+        return repository.save(book);
     }
 
     @Override
     public void update(Book book) {
         //todo
+    }
+
+    @Override
+    public void delete(long id) {
+        repository.deleteById(id);
     }
 
     @Override
@@ -39,6 +44,11 @@ public class BookServiceImpl implements BookService {
     @Override
     public Page<Book> get(Pageable pageable) {
         return repository.findAll(pageable);
+    }
+
+    @Override
+    public Page<Book> get(String query, Pageable pageable) {
+        return repository.findAllByDescriptionContainsIgnoreCase(query, pageable);
     }
 
     @Override

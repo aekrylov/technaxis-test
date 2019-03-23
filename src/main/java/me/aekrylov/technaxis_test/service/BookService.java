@@ -14,13 +14,17 @@ import java.util.Optional;
  */
 public interface BookService {
 
-    void create(Book book);
+    Book create(Book book);
 
     void update(Book book);
+
+    void delete(long id);
 
     boolean markRead(long bookId);
 
     Page<Book> get(Pageable pageable);
+
+    Page<Book> get(String query, Pageable pageable);
 
     Optional<Book> getById(long bookId);
 }
