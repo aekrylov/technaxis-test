@@ -1,7 +1,5 @@
-package me.aekrylov.technaxis_test.service;
+package me.aekrylov.technaxis_test;
 
-import me.aekrylov.technaxis_test.model.Book;
-import me.aekrylov.technaxis_test.repository.BookRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;

@@ -1,7 +1,5 @@
 package me.aekrylov.technaxis_test;
 
-import me.aekrylov.technaxis_test.model.Book;
-import me.aekrylov.technaxis_test.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

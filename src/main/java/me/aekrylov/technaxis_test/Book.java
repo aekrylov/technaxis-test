@@ -1,4 +1,4 @@
-package me.aekrylov.technaxis_test.model;
+package me.aekrylov.technaxis_test;
 
 import javax.persistence.*;
 
