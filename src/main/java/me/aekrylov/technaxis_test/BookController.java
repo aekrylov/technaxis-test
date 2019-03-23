@@ -23,7 +23,6 @@ public class BookController {
         this.bookService = bookService;
     }
 
-    //todo discovery for query params
     @GetMapping(path = "")
     public ResponseEntity<Page<Book>> list(Pageable pageable,
                                            @RequestParam(name = "query", required = false) String query) {

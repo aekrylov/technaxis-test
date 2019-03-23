@@ -13,7 +13,7 @@ import org.springframework.data.repository.PagingAndSortingRepository;
  */
 public interface BookRepository extends PagingAndSortingRepository<Book, Long> {
 
-    @Query("update Book set readAlready = true where id = :bookId")
+    @Query("update Book set readAlready = true where id = :bookId and readAlready = false ")
     @Modifying
     boolean markRead(long bookId);
 

@@ -1,6 +1,7 @@
 package me.aekrylov.technaxis_test;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 /**
  * By Anton Krylov (anthony.kryloff@gmail.com)
@@ -97,5 +98,20 @@ public class Book {
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Book)) return false;
+        Book book = (Book) o;
+        return getId() == book.getId() &&
+                getTitle().equals(book.getTitle()) &&
+                getAuthor().equals(book.getAuthor());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getTitle(), getAuthor());
     }
 }
