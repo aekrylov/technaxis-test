@@ -5,16 +5,12 @@ import me.aekrylov.technaxis_test.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PagedResourcesAssembler;
-import org.springframework.hateoas.PagedResources;
-import org.springframework.hateoas.Resource;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
-
 /**
+ * TODO HATEOAS
  * By Anton Krylov (anthony.kryloff@gmail.com)
  * Date: 3/23/19 6:38 PM
  */
@@ -30,21 +26,17 @@ public class BookController {
     }
 
     //todo discovery for query params
-    @GetMapping(path = "/")
-    public ResponseEntity list(Pageable pageable,
-                               @RequestParam(name = "query", required = false) String query,
-                               PagedResourcesAssembler<Book> assembler) {
+    @GetMapping(path = "")
+    public ResponseEntity<Page<Book>> list(Pageable pageable,
+                                           @RequestParam(name = "query", required = false) String query) {
         Page<Book> books = query != null
                 ? bookService.get(query, pageable)
                 : bookService.get(pageable);
 
-        return ResponseEntity.ok(assembler.toResource(
-                books,
-                linkTo(BookController.class).withSelfRel()
-        ));
+        return ResponseEntity.ok(books);
     }
 
-    @PostMapping(path = "/")
+    @PostMapping(path = "")
     public ResponseEntity create(@RequestParam Book book) {
         book = bookService.create(book);
         return ResponseEntity.ok(book.getId());
