@@ -25,8 +25,24 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public void update(Book book) {
-        //todo
+    public void update(long id, String title, String description, String isbn, Integer printYear) {
+        Book book = getById(id)
+                .orElseThrow(() -> new BookNotFoundException(id));
+
+        if (title != null) {
+            book.setTitle(title);
+        }
+        if (description != null) {
+            book.setDescription(description);
+        }
+        if (isbn != null) {
+            book.setIsbn(isbn);
+        }
+        if (printYear != null) {
+            book.setPrintYear(printYear);
+        }
+        book.setReadAlready(false);
+        repository.save(book);
     }
 
     @Override

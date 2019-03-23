@@ -14,7 +14,7 @@ public interface BookService {
 
     Book create(Book book);
 
-    void update(Book book);
+    void update(long id, String title, String description, String isbn, Integer printYear);
 
     void delete(long id);
 

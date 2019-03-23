@@ -45,10 +45,12 @@ public class BookController {
     }
 
     @RequestMapping(path = "/{id}", method = {RequestMethod.POST, RequestMethod.PUT})
-    public ResponseEntity update(@PathVariable("id") long id, @RequestParam Book book) {
-        //todo revise id handling
-        book.setId(id);
-        bookService.update(book);
+    public ResponseEntity update(@PathVariable("id") long id,
+                                 @RequestParam(required = false) String title,
+                                 @RequestParam(required = false) String description,
+                                 @RequestParam(required = false) String isbn,
+                                 @RequestParam(required = false) Integer printYear) {
+        bookService.update(id, title, description, isbn, printYear);
         return ResponseEntity.ok("ok");
     }
 
