@@ -36,3 +36,14 @@ Simply run `docker build .`, this will build the app inside Docker. HTTP port is
 2. Add heroku postgres add-on
 3. Setup S3 variables in app settings 
 4. Push to heroku remote
+
+# Check list
+
+[x] REST API
+[x] AWS
+[x] Deploy instructions
+[x] Docker
+[x] Heroku
+[ ] API docs
+[ ] FTS
+[ ] Frontend
