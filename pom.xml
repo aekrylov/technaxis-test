@@ -16,6 +16,7 @@
 
     <properties>
         <java.version>1.8</java.version>
+        <finalName>${project.artifactId}-${project.version}</finalName>
     </properties>
 
     <dependencies>
@@ -97,6 +98,9 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <finalName>${finalName}</finalName>
+                </configuration>
             </plugin>
         </plugins>
     </build>
