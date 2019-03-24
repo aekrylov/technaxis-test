@@ -7,8 +7,11 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import static org.springframework.web.bind.annotation.RequestMethod.*;
+
 /**
  * TODO HATEOAS
+ * TODO response codes
  * By Anton Krylov (anthony.kryloff@gmail.com)
  * Date: 3/23/19 6:38 PM
  */
@@ -44,7 +47,7 @@ public class BookController {
         return ResponseEntity.of(bookService.getById(bookId));
     }
 
-    @RequestMapping(path = "/{id}", method = {RequestMethod.POST, RequestMethod.PUT})
+    @RequestMapping(path = "/{id}", method = {POST, PUT, PATCH})
     public ResponseEntity update(@PathVariable("id") long id,
                                  @RequestParam(required = false) String title,
                                  @RequestParam(required = false) String description,
@@ -54,15 +57,16 @@ public class BookController {
         return ResponseEntity.ok("ok");
     }
 
-    @RequestMapping(path = "/{id}", method = RequestMethod.DELETE)
+    @RequestMapping(path = "/{id}", method = DELETE)
     public ResponseEntity delete(@PathVariable("id") long id) {
         bookService.delete(id);
         return ResponseEntity.ok("ok");
     }
 
-    @RequestMapping(path = "/{id}/mark-read", method = RequestMethod.POST)
+    @RequestMapping(path = "/{id}/mark-read", method = POST)
     public ResponseEntity markRead(@PathVariable("id") long id) {
         bookService.markRead(id);
+        //todo check if was updated
         return ResponseEntity.ok("ok");
     }
 }

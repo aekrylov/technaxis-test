@@ -12,4 +12,7 @@ RUN mvn -DfinalName=app clean verify
 FROM openjdk:8-jre-alpine
 WORKDIR /app
 COPY --from=builder /usr/src/app/target/app.jar .
+
+EXPOSE 8080
+
 ENTRYPOINT ["java", "-jar", "app.jar"]
