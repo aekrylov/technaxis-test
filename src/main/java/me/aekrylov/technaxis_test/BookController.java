@@ -43,12 +43,12 @@ public class BookController {
     }
 
     @GetMapping(path = "/{id}")
-    public ResponseEntity<Book> getById(@PathVariable("id") long bookId) {
+    public ResponseEntity<Book> getById(@PathVariable("id") int bookId) {
         return ResponseEntity.of(bookService.getById(bookId));
     }
 
     @RequestMapping(path = "/{id}", method = {POST, PUT, PATCH})
-    public ResponseEntity update(@PathVariable("id") long id,
+    public ResponseEntity update(@PathVariable("id") int id,
                                  @RequestParam(required = false) String title,
                                  @RequestParam(required = false) String description,
                                  @RequestParam(required = false) String isbn,
@@ -58,13 +58,13 @@ public class BookController {
     }
 
     @RequestMapping(path = "/{id}", method = DELETE)
-    public ResponseEntity delete(@PathVariable("id") long id) {
+    public ResponseEntity delete(@PathVariable("id") int id) {
         bookService.delete(id);
         return ResponseEntity.ok("ok");
     }
 
     @RequestMapping(path = "/{id}/mark-read", method = POST)
-    public ResponseEntity markRead(@PathVariable("id") long id) {
+    public ResponseEntity markRead(@PathVariable("id") int id) {
         bookService.markRead(id);
         //todo check if was updated
         return ResponseEntity.ok("ok");

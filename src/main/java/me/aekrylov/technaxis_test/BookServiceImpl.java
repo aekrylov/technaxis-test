@@ -25,7 +25,7 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public void update(long id, String title, String description, String isbn, Integer printYear) {
+    public void update(int id, String title, String description, String isbn, Integer printYear) {
         Book book = getById(id)
                 .orElseThrow(() -> new BookNotFoundException(id));
 
@@ -46,12 +46,12 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public void delete(long id) {
+    public void delete(int id) {
         repository.deleteById(id);
     }
 
     @Override
-    public boolean markRead(long bookId) {
+    public boolean markRead(int bookId) {
         return repository.markRead(bookId);
     }
 
@@ -66,7 +66,7 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public Optional<Book> getById(long bookId) {
+    public Optional<Book> getById(int bookId) {
         return repository.findById(bookId);
     }
 }

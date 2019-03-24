@@ -1,6 +1,5 @@
 package me.aekrylov.technaxis_test;
 
-import me.aekrylov.technaxis_test.Book;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -14,15 +13,15 @@ public interface BookService {
 
     Book create(Book book);
 
-    void update(long id, String title, String description, String isbn, Integer printYear);
+    void update(int id, String title, String description, String isbn, Integer printYear);
 
-    void delete(long id);
+    void delete(int id);
 
-    boolean markRead(long bookId);
+    boolean markRead(int bookId);
 
     Page<Book> get(Pageable pageable);
 
     Page<Book> get(String query, Pageable pageable);
 
-    Optional<Book> getById(long bookId);
+    Optional<Book> getById(int bookId);
 }

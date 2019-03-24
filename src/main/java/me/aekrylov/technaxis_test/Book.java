@@ -12,7 +12,7 @@ public class Book {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private int id;
 
     @Column(nullable = false, length = 128)
     private String title;
@@ -24,7 +24,7 @@ public class Book {
     @Column(nullable = false, length = 128, updatable = false)
     private String author;
 
-    @Column(nullable = false, length = 20)
+    @Column(nullable = false, length = 20, unique = true)
     private String isbn;
 
     @Column(nullable = false)
@@ -36,11 +36,11 @@ public class Book {
     @Column(nullable = false)
     private String imageUrl;
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
