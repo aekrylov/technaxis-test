@@ -1,5 +1,6 @@
 package me.aekrylov.technaxis_test;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -34,6 +35,9 @@ public class BookControllerTests {
     @Autowired
     private BookService bookService;
 
+    @Autowired
+    private BookRepository bookRepository;
+
     private Book book;
 
     @Before
@@ -41,8 +45,17 @@ public class BookControllerTests {
         book = bookService.create(newBook("Book1", true));
     }
 
+    @After
+    public void tearDown() {
+        bookRepository.deleteAll();
+    }
+
     @Test
     public void listBooks() throws Exception {
+        for (int i = 2; i <= 5; i++) {
+            bookService.create(newBook("Book" + i, i % 4 == 0));
+        }
+
         this.mvc.perform(get("/books").accept(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isOk())
                 .andDo(document("books-get"));
@@ -59,7 +72,8 @@ public class BookControllerTests {
                     Book newVersion = bookService.getById(book.getId()).get();
                     assertEquals(newVersion.getTitle(), newTitle);
                     assertFalse(newVersion.isReadAlready());
-                });
+                })
+                .andDo(document("book-post"));
     }
 
     @Test
@@ -67,7 +81,8 @@ public class BookControllerTests {
         this.mvc.perform(post("/books/1337")
                 .param("title", "New title"))
                 .andExpect(status().isNotFound())
-                .andExpect(content().string("Book with id 1337 not found"));
+                .andExpect(content().string("Book with id 1337 not found"))
+                .andDo(document("books-404"));
     }
 
     private Book newBook(String str, boolean read) {
