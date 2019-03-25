@@ -15,4 +15,6 @@ COPY --from=builder /usr/src/app/target/app.jar .
 
 EXPOSE 8080
 
+HEALTHCHECK CMD curl --silent --fail localhost:8080/actuator/health || exit 1
+
 ENTRYPOINT ["java", "-jar", "app.jar"]

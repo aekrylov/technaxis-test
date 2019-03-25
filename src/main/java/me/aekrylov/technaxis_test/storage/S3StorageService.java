@@ -1,5 +1,6 @@
 package me.aekrylov.technaxis_test.storage;
 
+import com.amazonaws.SdkClientException;
 import com.amazonaws.auth.AWSStaticCredentialsProvider;
 import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.client.builder.AwsClientBuilder;
@@ -9,8 +10,9 @@ import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import org.springframework.stereotype.Component;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.io.InputStream;
+import java.io.IOException;
 import java.util.UUID;
 
 /**
@@ -38,16 +40,20 @@ public class S3StorageService implements StorageService {
 
 
     @Override
-    public String upload(String filename, InputStream data, long size) {
-        String objectName = UUID.randomUUID().toString() + "_" + filename;
+    public String upload(MultipartFile file) throws IOException, FileUploadException {
+        String objectName = UUID.randomUUID().toString() + "_" + file.getOriginalFilename();
 
         ObjectMetadata metadata = new ObjectMetadata();
-        metadata.setContentLength(size);
-        PutObjectRequest putObjectRequest = new PutObjectRequest(bucketName, objectName, data, metadata)
+        metadata.setContentType(file.getContentType());
+        metadata.setContentLength(file.getSize());
+        PutObjectRequest putObjectRequest = new PutObjectRequest(bucketName, objectName, file.getInputStream(), metadata)
                 .withCannedAcl(CannedAccessControlList.PublicRead);
 
-        s3client.putObject(putObjectRequest);
-
+        try {
+            s3client.putObject(putObjectRequest);
+        } catch (SdkClientException e) {
+            throw new FileUploadException(e);
+        }
         return s3client.getUrl(bucketName, objectName).toString();
     }
 }

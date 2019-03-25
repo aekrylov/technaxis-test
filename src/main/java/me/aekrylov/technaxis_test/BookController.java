@@ -37,9 +37,9 @@ public class BookController {
     }
 
     @PostMapping(path = "")
-    public ResponseEntity create(@RequestParam Book book) {
+    public ResponseEntity create(@RequestBody Book book) {
         book = bookService.create(book);
-        return ResponseEntity.ok(book.getId());
+        return ResponseEntity.status(201).body(book.getId());
     }
 
     @GetMapping(path = "/{id}")

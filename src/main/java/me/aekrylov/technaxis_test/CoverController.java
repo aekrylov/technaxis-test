@@ -26,8 +26,13 @@ public class CoverController {
 
     @PostMapping(path = "")
     public ResponseEntity<String> upload(@RequestParam("file") MultipartFile file) throws IOException {
-        return ResponseEntity.ok(
-                storageService.upload(file.getOriginalFilename(), file.getInputStream(), file.getSize())
-        );
+        if (file.getContentType() == null || !file.getContentType().startsWith("image/")) {
+            return ResponseEntity.badRequest().body("Only images allowed");
+        }
+        try {
+            return ResponseEntity.ok(storageService.upload(file));
+        } catch (FileUploadException e) {
+            return ResponseEntity.status(500).body(e.getMessage());
+        }
     }
 }
