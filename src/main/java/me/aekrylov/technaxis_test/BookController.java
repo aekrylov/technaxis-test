@@ -1,8 +1,6 @@
 package me.aekrylov.technaxis_test;
 
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
+import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -30,8 +28,17 @@ public class BookController {
     }
 
     @ApiOperation("List books with pagination")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "page", value = "Zero indexed page number",
+                    paramType = "query", dataTypeClass = Integer.class, defaultValue = "0"),
+            @ApiImplicitParam(name = "size", value = "Page size",
+                    paramType = "query", dataTypeClass = Integer.class, defaultValue = "20"),
+            @ApiImplicitParam(name = "sort", value = "Sorting specification",
+                    paramType = "query", dataTypeClass = String.class, example = "title,desc", allowMultiple = true)
+    })
     @GetMapping(path = "", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Page<Book>> list(Pageable pageable,
+                                           @ApiParam("Optional full-text search query")
                                            @RequestParam(name = "query", required = false) String query) {
         Page<Book> books = query != null
                 ? bookService.get(query, pageable)
@@ -81,6 +88,7 @@ public class BookController {
         return ResponseEntity.ok("ok");
     }
 
+    @ApiOperation("Mark book as read")
     @RequestMapping(path = "/{id}/mark-read", method = POST)
     public ResponseEntity markRead(@PathVariable("id") int id) {
         bookService.markRead(id);

@@ -29,7 +29,7 @@ public class CoverController {
     }
 
     @PostMapping(path = "")
-    @ApiOperation(value = "Upload file for a book cover", notes = "Only images allowed")
+    @ApiOperation(value = "Upload book cover", notes = "Only images allowed")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Upload successful, returns file URL"),
             @ApiResponse(code = 400, message = "File type not supported"),
