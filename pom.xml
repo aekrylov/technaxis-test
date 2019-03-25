@@ -10,7 +10,7 @@
     </parent>
     <groupId>me.aekrylov</groupId>
     <artifactId>technaxis_test</artifactId>
-    <version>0.2</version>
+    <version>0.3-SNAPSHOT</version>
     <name>technaxis_test</name>
     <description>Test project for TECHNAXIS</description>
 
