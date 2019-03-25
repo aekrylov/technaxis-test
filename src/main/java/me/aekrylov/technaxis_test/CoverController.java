@@ -3,7 +3,6 @@ package me.aekrylov.technaxis_test;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
-import me.aekrylov.technaxis_test.storage.FileUploadException;
 import me.aekrylov.technaxis_test.storage.StorageService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -39,10 +38,6 @@ public class CoverController {
         if (file.getContentType() == null || !file.getContentType().startsWith("image/")) {
             return ResponseEntity.badRequest().body("Only images allowed");
         }
-        try {
-            return ResponseEntity.ok(storageService.upload(file));
-        } catch (FileUploadException e) {
-            return ResponseEntity.status(500).body(e.getMessage());
-        }
+        return ResponseEntity.ok(storageService.upload(file));
     }
 }
