@@ -1,5 +1,9 @@
 This is a test project for TECHNAXIS
 
+# Using the API
+
+[Check out Swagger docs](https://technaxis-test.herokuapp.com/swagger-ui.html)
+
 # Buliding and running
 
 ## Prerequisites
@@ -17,6 +21,9 @@ This is a test project for TECHNAXIS
     `s3.secret-key` | Your secret key    
     `s3.bucket-name`| Bucket name. Bucket must be public
     
+3. Note that all these properties must be available for tests to pass, 
+which can be done by putting them into `application.properties` file under test resources root
+
 3. For DBMS other that Postgres or H2, add corresponding runtime dependency
     
 ## Locally
@@ -44,6 +51,6 @@ Simply run `docker build .`, this will build the app inside Docker. HTTP port is
 [x] Deploy instructions
 [x] Docker
 [x] Heroku
-[ ] API docs
+[x] API docs
 [ ] FTS
 [ ] Frontend
