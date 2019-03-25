@@ -1,5 +1,6 @@
 package me.aekrylov.technaxis_test;
 
+import me.aekrylov.technaxis_test.storage.StorageService;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
@@ -38,6 +40,9 @@ public class BookControllerTests {
 
     @Autowired
     private BookRepository bookRepository;
+
+    @MockBean
+    private StorageService storageService; //mocked because we set up the full context but don't have storage keys
 
     private Book book;
 
