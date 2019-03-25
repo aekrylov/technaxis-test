@@ -21,9 +21,6 @@ This is a test project for TECHNAXIS
     `s3.secret-key` | Your secret key    
     `s3.bucket-name`| Bucket name. Bucket must be public
     
-3. Note that all these properties must be available for tests to pass, 
-which can be done by putting them into `application.properties` file under test resources root
-
 3. For DBMS other that Postgres or H2, add corresponding runtime dependency
     
 ## Locally

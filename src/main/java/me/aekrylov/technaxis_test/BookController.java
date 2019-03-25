@@ -4,6 +4,7 @@ import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -49,49 +50,61 @@ public class BookController {
 
     @ApiOperation("Create a new book")
     @ApiResponses({
-            @ApiResponse(code = 201, message = "Book created, id of the new book is returned")
+            @ApiResponse(code = 201, message = "Book created, id of the new book is returned",
+                    examples = @Example(@ExampleProperty("1")))
     })
     @PostMapping(path = "")
-    public ResponseEntity create(@RequestBody Book book) {
+    public ResponseEntity<Integer> create(@RequestBody Book book) {
         book = bookService.create(book);
         return ResponseEntity.status(201).body(book.getId());
     }
 
     @ApiOperation("Find book by id")
-    @GetMapping(path = "/{id}")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Returns book with given ID"),
+            @ApiResponse(code = 404, message = "Book with specified ID not found")
+    })
+    @GetMapping(path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Book> getById(@PathVariable("id") int bookId) {
         return ResponseEntity.of(bookService.getById(bookId));
     }
 
     @ApiOperation(
-            value = "Update existing book",
-            notes = "Only title, description, isbn and print year can be changed; markRead resets to false"
+            value = "Update existing book to a new edition",
+            notes = "Only title, description, isbn and print year can be changed; markRead resets to false."
     )
     @ApiResponses({
-            @ApiResponse(code = 200, message = "Successful update"),
+            @ApiResponse(code = 200, message = "Successful update, updated book returned"),
             @ApiResponse(code = 404, message = "Book with specified ID not found")
     })
-    @RequestMapping(path = "/{id}", method = {POST, PUT, PATCH})
-    public ResponseEntity update(@PathVariable("id") int id,
+    @RequestMapping(path = "/{id}", method = {POST, PATCH}, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Book> update(@PathVariable("id") int id,
                                  @RequestParam(required = false) String title,
                                  @RequestParam(required = false) String description,
                                  @RequestParam(required = false) String isbn,
                                  @RequestParam(required = false) Integer printYear) {
-        bookService.update(id, title, description, isbn, printYear);
-        return ResponseEntity.ok("ok");
+        Book book = bookService.update(id, title, description, isbn, printYear);
+        return ResponseEntity.ok(book);
     }
 
     @ApiOperation("Delete a book")
+    @ApiResponses({
+            @ApiResponse(code = 204, message = "OK")
+    })
     @RequestMapping(path = "/{id}", method = DELETE)
-    public ResponseEntity delete(@PathVariable("id") int id) {
+    public ResponseEntity<Void> delete(@PathVariable("id") int id) {
         bookService.delete(id);
-        return ResponseEntity.ok("ok");
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @ApiOperation("Mark book as read")
+    @ApiResponses({
+            @ApiResponse(code = 204, message = "OK"),
+            @ApiResponse(code = 404, message = "Book not found")
+    })
     @RequestMapping(path = "/{id}/mark-read", method = POST)
-    public ResponseEntity markRead(@PathVariable("id") int id) {
+    public ResponseEntity<Void> markRead(@PathVariable("id") int id) {
         bookService.markRead(id);
-        return ResponseEntity.ok("ok");
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
