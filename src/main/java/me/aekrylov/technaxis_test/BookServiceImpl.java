@@ -27,7 +27,7 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public void update(int id, String title, String description, String isbn, Integer printYear) {
+    public Book update(int id, String title, String description, String isbn, Integer printYear) {
         Book book = getById(id)
                 .orElseThrow(() -> new BookNotFoundException(id));
 
@@ -44,7 +44,7 @@ public class BookServiceImpl implements BookService {
             book.setPrintYear(printYear);
         }
         book.setReadAlready(false);
-        repository.save(book);
+        return repository.save(book);
     }
 
     @Override
