@@ -1,0 +1,9 @@
+= Getting started
+
+== Listing books
+
+.request
+include::{snippets}/books-get/http-request.adoc[]
+
+.response
+include::{snippets}/books-get/http-response.adoc[]

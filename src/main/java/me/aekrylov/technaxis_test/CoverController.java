@@ -1,5 +1,9 @@
 package me.aekrylov.technaxis_test;
 
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
+import me.aekrylov.technaxis_test.storage.FileUploadException;
 import me.aekrylov.technaxis_test.storage.StorageService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,6 +29,12 @@ public class CoverController {
     }
 
     @PostMapping(path = "")
+    @ApiOperation(value = "Upload file for a book cover", notes = "Only images allowed")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Upload successful, returns file URL"),
+            @ApiResponse(code = 400, message = "File type not supported"),
+            @ApiResponse(code = 500, message = "Internal error during file upload")
+    })
     public ResponseEntity<String> upload(@RequestParam("file") MultipartFile file) throws IOException {
         if (file.getContentType() == null || !file.getContentType().startsWith("image/")) {
             return ResponseEntity.badRequest().body("Only images allowed");

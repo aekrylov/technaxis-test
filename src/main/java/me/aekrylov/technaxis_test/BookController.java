@@ -1,5 +1,8 @@
 package me.aekrylov.technaxis_test;
 
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -26,7 +29,8 @@ public class BookController {
         this.bookService = bookService;
     }
 
-    @GetMapping(path = "")
+    @ApiOperation("List books with pagination")
+    @GetMapping(path = "", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Page<Book>> list(Pageable pageable,
                                            @RequestParam(name = "query", required = false) String query) {
         Page<Book> books = query != null
@@ -36,17 +40,30 @@ public class BookController {
         return ResponseEntity.ok(books);
     }
 
+    @ApiOperation("Create a new book")
+    @ApiResponses({
+            @ApiResponse(code = 201, message = "Book created, id of the new book is returned")
+    })
     @PostMapping(path = "")
     public ResponseEntity create(@RequestBody Book book) {
         book = bookService.create(book);
         return ResponseEntity.status(201).body(book.getId());
     }
 
+    @ApiOperation("Find book by id")
     @GetMapping(path = "/{id}")
     public ResponseEntity<Book> getById(@PathVariable("id") int bookId) {
         return ResponseEntity.of(bookService.getById(bookId));
     }
 
+    @ApiOperation(
+            value = "Update existing book",
+            notes = "Only title, description, isbn and print year can be changed; markRead resets to false"
+    )
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Successful update"),
+            @ApiResponse(code = 404, message = "Book with specified ID not found")
+    })
     @RequestMapping(path = "/{id}", method = {POST, PUT, PATCH})
     public ResponseEntity update(@PathVariable("id") int id,
                                  @RequestParam(required = false) String title,
@@ -57,6 +74,7 @@ public class BookController {
         return ResponseEntity.ok("ok");
     }
 
+    @ApiOperation("Delete a book")
     @RequestMapping(path = "/{id}", method = DELETE)
     public ResponseEntity delete(@PathVariable("id") int id) {
         bookService.delete(id);
