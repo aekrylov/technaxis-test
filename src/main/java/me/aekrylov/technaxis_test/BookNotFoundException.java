@@ -6,7 +6,7 @@ package me.aekrylov.technaxis_test;
  */
 public class BookNotFoundException extends RuntimeException {
 
-    public BookNotFoundException(long id) {
+    public BookNotFoundException(int id) {
         super(String.format("Book with id %d not found", id));
     }
 }

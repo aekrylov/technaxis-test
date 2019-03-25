@@ -12,9 +12,9 @@ import org.springframework.data.repository.PagingAndSortingRepository;
  */
 public interface BookRepository extends PagingAndSortingRepository<Book, Integer> {
 
-    @Query("update Book set readAlready = true where id = :bookId and readAlready = false ")
+    @Query("update Book set readAlready = true where id = :bookId")
     @Modifying
-    boolean markRead(int bookId);
+    int markRead(int bookId);
 
     //todo FTS
     Page<Book> findAllByDescriptionContainsIgnoreCase(String query, Pageable pageable);

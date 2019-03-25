@@ -17,7 +17,7 @@ public interface BookService {
 
     void delete(int id);
 
-    boolean markRead(int bookId);
+    void markRead(int bookId);
 
     Page<Book> get(Pageable pageable);
 

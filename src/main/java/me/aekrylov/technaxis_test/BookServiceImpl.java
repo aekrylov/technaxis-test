@@ -4,6 +4,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
+import javax.transaction.Transactional;
 import java.util.Optional;
 
 /**
@@ -11,6 +12,7 @@ import java.util.Optional;
  * Date: 3/23/19 6:28 PM
  */
 @Component
+@Transactional
 public class BookServiceImpl implements BookService {
 
     private final BookRepository repository;
@@ -51,8 +53,10 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public boolean markRead(int bookId) {
-        return repository.markRead(bookId);
+    public void markRead(int bookId) {
+        if (repository.markRead(bookId) == 0) {
+            throw new BookNotFoundException(bookId);
+        }
     }
 
     @Override

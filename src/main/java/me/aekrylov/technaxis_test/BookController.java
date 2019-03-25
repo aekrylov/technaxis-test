@@ -16,7 +16,7 @@ import static org.springframework.web.bind.annotation.RequestMethod.*;
  * Date: 3/23/19 6:38 PM
  */
 @RestController
-@RequestMapping(value = "/books", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "/books")
 public class BookController {
 
     private final BookService bookService;
@@ -66,7 +66,6 @@ public class BookController {
     @RequestMapping(path = "/{id}/mark-read", method = POST)
     public ResponseEntity markRead(@PathVariable("id") int id) {
         bookService.markRead(id);
-        //todo check if was updated
         return ResponseEntity.ok("ok");
     }
 }
