@@ -29,6 +29,8 @@ Run `./mvnw spring-boot:run`, package using `mvn package`
 
 ## Run in Docker
 
+[![](https://images.microbadger.com/badges/image/aekrylov/technaxis-test-app:0.2.svg)](https://microbadger.com/images/aekrylov/technaxis-test-app:0.2)
+
 Simply run `docker build .`, this will build the app inside Docker. HTTP port is 8080 unless overriden
 
 ## Run on Heroku
@@ -43,11 +45,11 @@ Simply run `docker build .`, this will build the app inside Docker. HTTP port is
 
 # Check list
 
-[x] REST API
-[x] AWS
-[x] Deploy instructions
-[x] Docker
-[x] Heroku
-[x] API docs
-[ ] FTS
-[ ] Frontend
+- [x] REST API
+- [x] AWS
+- [x] Deploy instructions
+- [x] Docker
+- [x] Heroku
+- [x] API docs
+- [ ] FTS
+- [ ] Frontend
